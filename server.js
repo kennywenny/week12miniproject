@@ -25,7 +25,7 @@ async function startApplication() {
     await db.query('insert into movies (name) values (?);', name)
     res.status(201).end()
   })
-  
+
   app.get('/api/reviews', async (__, res) => {
     const [results, _] = await db.query('select id, movie_id, review_text from reviews')
     res.json(results)
@@ -35,6 +35,12 @@ async function startApplication() {
     const { movie_id: movieId, review_text: reviewText } = req.body
     await db.query('insert into reviews (review_text, movie_id) values (?, ?)', [reviewText, movieId])
     res.status(201).end()
+  })
+
+  app.put('/api/update-review', async (req, res) => {
+    const { movie_id: movieId, review_text: reviewText, id } = req.body
+    await db.query('update reviews set movie_id = ?, review_text = ? where id = ?', [movieId, reviewText, id])
+    res.status(204).end()
   })
 
   app.listen(port, () => {
