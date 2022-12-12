@@ -22,7 +22,13 @@ async function startApplication() {
 
   app.post('/api/add-movie', async (req, res) => {
     const { name } = req.body
-    await db.query(`insert into movies (name) values (?);`, name)
+    await db.query('insert into movies (name) values (?);', name)
+    res.status(201).end()
+  })
+
+  app.post('/api/create-review', async (req, res) => {
+    const { movie_id: movieId, review_text: reviewText } = req.body
+    await db.query('insert into reviews (review_text, movie_id) values (?, ?)', [reviewText, movieId])
     res.status(201).end()
   })
 
