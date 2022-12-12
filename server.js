@@ -16,9 +16,8 @@ async function startApplication() {
   app.use(express.urlencoded({ extended: true }))
 
   app.get('/api/movies', async (__, res) => {
-    const [results, _] = await db.query('select name from movies')
-    const movieNames = results.map(it => it.name)
-    res.json(movieNames)
+    const [results, _] = await db.query('select id, name from movies')
+    res.json(results)
   })
 
   app.post('/api/add-movie', async (req, res) => {
