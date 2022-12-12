@@ -1,18 +1,17 @@
-const express = require('express')
 const Database = require('./src/database')
 const MovieRoutes = require('./src/movieRoutes')
+const RestServer = require('./src/restServer')
 const ReviewRoutes = require('./src/reviewRoutes')
 
-const app = express()
 const port = process.env.PORT || 3001
 
+const restServer = new RestServer(port)
 const database = new Database()
 const movieRoutes = new MovieRoutes(database)
 const reviewRoutes = new ReviewRoutes(database)
 
 async function startApplication() {
-  app.use(express.json())
-  app.use(express.urlencoded({ extended: true }))
+  const app = restServer.constructServer()
   app.use('/api', movieRoutes.getRouter())
   app.use('/api', reviewRoutes.getRouter())
   app.listen(port, () => {
