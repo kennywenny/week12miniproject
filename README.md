@@ -16,8 +16,6 @@ In this mini-project, you will build Rest API routes for creating, retrieving, a
 
 ## Acceptance Criteria
 
-* It's done when the `/api/movies` route renders a list of all movies.
-
 * It's done when the `/api/add-movie` route successfully adds a movie when tested using Insomnia.
 
 * It's done when the `/api/update-review` route successfully updates a movie when tested using Insomnia.
