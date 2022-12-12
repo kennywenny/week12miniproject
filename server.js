@@ -1,33 +1,17 @@
 const express = require('express')
 const Database = require('./src/database')
+const MovieRoutes = require('./src/movieRoutes')
 
 const app = express()
 const port = process.env.PORT || 3001
 
 const database = new Database()
+const movieRoutes = new MovieRoutes(database)
 
 async function startApplication() {
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
-
-  app.get('/api/movies', async (__, res) => {
-    const db = await database.getConnection()
-    const [results, _] = await db.query('select id, name from movies')
-    res.json(results)
-  })
-
-  app.post('/api/add-movie', async (req, res) => {
-    const { name } = req.body
-    const db = await database.getConnection()
-    await db.query('insert into movies (name) values (?);', name)
-    res.status(201).end()
-  })
-  
-  app.delete('/api/movie/:id', async (req, res) => {
-    const db = await database.getConnection()
-    await db.query('delete from movies where id = ?', req.params.id)
-    res.send('Hello Sam')
-  })
+  app.use('/api', movieRoutes.getRouter())
 
   app.get('/api/reviews', async (__, res) => {
     const db = await database.getConnection()
