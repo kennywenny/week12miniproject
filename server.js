@@ -5,7 +5,7 @@ const ReviewRoutes = require('./src/reviewRoutes')
 
 const port = process.env.PORT || 3001
 
-const restServer = new RestServer(port)
+const restServer = new RestServer()
 const database = new Database()
 const movieRoutes = new MovieRoutes(database)
 const reviewRoutes = new ReviewRoutes(database)
