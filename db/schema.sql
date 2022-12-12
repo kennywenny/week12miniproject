@@ -14,4 +14,5 @@ create table reviews (
   movie_id int not null,
   foreign key (movie_id)
   references movies(id)
+  on delete cascade
 );
