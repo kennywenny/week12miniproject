@@ -27,6 +27,7 @@ async function startApplication() {
   })
   
   app.delete('/api/movie/:id', async (req, res) => {
+    await db.query('delete from movies where id = ?', req.params.id)
     res.send('Hello Sam')
   })
 
